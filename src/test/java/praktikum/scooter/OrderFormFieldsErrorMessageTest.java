@@ -5,27 +5,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import praktikum.scooter.pageObject.MainPage;
 import praktikum.scooter.pageObject.OrderFormPage;
-import org.junit.Before;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.junit.After;
 import org.junit.Test;
 import java.time.Duration;
 import static org.junit.Assert.assertTrue;
 
-public class OrderFormFieldsErrorMessageTest {
-
-    private WebDriver driver;
-
-    @Before
-    public void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-    }
+public class OrderFormFieldsErrorMessageTest extends BaseTest{
 
     @Test
     public void checkErrorMessagesInOrderFormFields(){
@@ -47,16 +32,13 @@ public class OrderFormFieldsErrorMessageTest {
         WebElement phoneNumberError = driver.findElement(By.xpath(".//div[text()='Введите корректный номер']"));
         assertTrue("Ошибка для поля 'Телефон' не появилась", phoneNumberError.isDisplayed());
 
+        objOrderForm.clickNextButton();
+
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[text()='Комментарий для курьера']")));
 
         WebElement commentFieldError = driver.findElement(By.xpath(".//div[text()='Про аренду']"));
         assertTrue("Ошибка для поля 'Комментарий' не появилась", commentFieldError.isDisplayed());
-    }
-
-    @After
-    public void tearDown() {
-        driver.quit();
     }
 
 }

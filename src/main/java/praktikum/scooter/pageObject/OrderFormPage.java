@@ -9,6 +9,8 @@ public class OrderFormPage {
 
     private WebDriver driver;
 
+    // Форма заказа
+    private By orderForm = By.xpath(".//div[@class='Order_Form__17u6u']");
     // Поле ввода имени
     private By firstNameField = By.xpath(".//input[@placeholder = '* Имя']");
     // Поле ввода фамилии
@@ -29,20 +31,24 @@ public class OrderFormPage {
     private By orderSubmitButton = By.xpath(".//div[@class='Order_Buttons__1xGrp']/button[text()='Заказать']");
     // Кнопка подтверждения диалогового окна
     private By orderConfirmButton = By.xpath(".//button[text()='Да']");
+    // Окно "Заказ оформлен"
+    private By successfulOrderPopup = By.xpath("//div[contains(text(), 'Заказ оформлен')]");
 
 
     public OrderFormPage(WebDriver driver){
         this.driver = driver;
     }
 
+    public By getOrderForm(){
+        return orderForm;
+    }
+
     public void setUserName(String username){
         driver.findElement(firstNameField).sendKeys(username);
     }
-
     public void setUserLastName(String lastName){
         driver.findElement(lastNameField).sendKeys(lastName);
     }
-
     public void setAddress(String address){
         driver.findElement(addressField).sendKeys(address);
     }
@@ -57,7 +63,6 @@ public class OrderFormPage {
     public void setPhoneNumber(String phoneNumber){
         driver.findElement(phoneNumberField).sendKeys(phoneNumber);
     }
-
     public void clickNextButton(){
         driver.findElement(nextButton).click();
     }
@@ -97,6 +102,10 @@ public class OrderFormPage {
         setRentalPeriod(rentalPeriod);
         clickOrderSubmitButton();
         clickOrderConfirmButton();
+    }
+
+    public By getSuccessfulOrderPopup(){
+        return successfulOrderPopup;
     }
 
 }
